@@ -78,27 +78,37 @@ export interface TooltipProps {
   ) => Record<string, unknown>;
 }
 
-const Tooltip = ({ text, open, x, y, refs, strategy, getFloatingProps }: TooltipProps) => {
+const Tooltip = ({
+                   text,
+                   open,
+                   x,
+                   y,
+                   refs,
+                   strategy,
+                   getFloatingProps
+                 }: TooltipProps) => {
   return open && text ? (
-    <div
-      className={tremorTwMerge(
-        // common
-        "max-w-xs text-sm z-20 rounded-tremor-default opacity-100 px-2.5 py-1 whitespace-nowrap",
-        // light
-        "text-white bg-tremor-background-emphasis",
-        // dark
-        "text-white dark:bg-dark-tremor-background-subtle",
-      )}
-      ref={refs.setFloating}
-      style={{
-        position: strategy,
-        top: y ?? 0,
-        left: x ?? 0,
-      }}
-      {...getFloatingProps()}
-    >
-      {text}
-    </div>
+      <div
+          className={tremorTwMerge(
+              "max-w-xs text-sm z-20 rounded-tremor-default opacity-100 px-2.5 py-1",
+              "overflow-hidden", // Hide overflowing text.
+              // light
+              "text-white bg-tremor-background-emphasis",
+              // dark
+              "text-white dark:bg-dark-tremor-background-subtle",
+              // "whitespace-nowrap", - Add if you want to prevent the text from wrapping.
+              // Removing it will allow the text to wrap at newline characters.
+          )}
+          ref={refs.setFloating}
+          style={{
+            position: strategy,
+            top: y ?? 0,
+            left: x ?? 0,
+          }}
+          {...getFloatingProps()}
+      >
+        {text}
+      </div>
   ) : null;
 };
 
